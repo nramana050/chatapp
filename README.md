@@ -1,68 +1,67 @@
-# Snappy - Chat Application 
-Snappy is chat application build with the power of MERN Stack. You can find the tutorial [here](https://www.youtube.com/watch?v=otaQKODEUFs)
+Steps to Deploy the Application
+
+Install AWS CLI and Terraform:
+
+Configure AWS CLI with aws credentials
+
+Initialize and Apply:
+
+Run terraform init to initialize Terraform.
+Run terraform apply -auto-approve to deploy the infrastructure
 
 
-![login page](./images/snappy_login.png)
+Steps for Domain Registrar
 
-![home page](./images/snappy.png)
+Login to Domain Registrar:
 
-## Installation Guide
+Access your domain registrar's control panel.
+Manage DNS Settings:
 
-### Requirements
-- [Nodejs](https://nodejs.org/en/download)
-- [Mongodb](https://www.mongodb.com/docs/manual/administration/install-community/)
+Navigate to the DNS settings for your domain.
+Add A Records:
 
-Both should be installed and make sure mongodb is running.
-### Installation
+Create an A record for frontend.yourdomain.com pointing to the IP of the frontend server.
+Create an A record for backend.yourdomain.com pointing to the IP of the backend server.
+Save Changes:
 
-#### First Method
-```shell
-git clone https://github.com/koolkishan/chat-app-react-nodejs
-cd chat-app-react-nodejs
-```
-Now rename env files from .env.example to .env
-```shell
-cd public
-mv .env.example .env
-cd ..
-cd server
-mv .env.example .env
-cd ..
-```
+Ensure the TTL is set appropriately, then save changes.
 
-Now install the dependencies
-```shell
-cd server
-yarn
-cd ..
-cd public
-yarn
-```
-We are almost done, Now just start the development server.
+ Scalability Plan
+For 25,000 Users
+Horizontal Scaling:
 
-For Frontend.
-```shell
-cd public
-yarn start
-```
-For Backend.
+Add more EC2 instances for frontend and backend.
+Use Auto Scaling groups to automatically scale the number of instances based on load.
+Database Scaling:
 
-Open another terminal in folder, Also make sure mongodb is running in background.
-```shell
-cd server
-yarn start
-```
-Done! Now open localhost:3000 in your browser.
+Use a larger instance for MongoDB or switch to Amazon DocumentDB for managed service with scalability.
+Caching:
 
-#### Second Method
-- This method requires docker and docker-compose to be installed in your system.
-- Make sure you are in the root of your project and run the following command.
+Use Amazon ElastiCache to cache frequent queries and reduce load on the database.
+Load Balancing:
 
-```shell
-docker compose build --no-cache
-```
-after the build is complete run the containers using the following command
-```shell
-docker compose up
-```
-now open localhost:3000 in your browser.
+Use Application Load Balancer (ALB) to distribute traffic across multiple instances.
+Static Content Delivery:
+
+Use Amazon S3 and CloudFront for delivering static content.
+
+For 225,000 Users
+Further Horizontal Scaling:
+
+Increase the Auto Scaling group limits to handle more instances.
+Consider multi-AZ deployments for higher availability.
+Database Sharding:
+
+Implement sharding in MongoDB to distribute database load across multiple servers.
+Microservices Architecture:
+
+Break the application into smaller microservices to handle specific functionalities independently.
+Advanced Caching:
+
+Use advanced caching strategies with ElastiCache for both Redis and Memcached.
+Content Delivery Network (CDN):
+
+Use CloudFront for global content distribution to reduce latency.
+Queue Management:
+
+Use Amazon SQS for managing background tasks and reducing load on the backend servers.
